@@ -9,19 +9,23 @@
 import UIKit
 
 class KMGetServerDataOperation: KMCustomOperation {
-    typealias onCompletioBlock = (Data?,Error?,Int?)-> ()
+   
     private let urlString: String
     private let provider: KMNetworkingProvider
+    private let postData:Any?
+    
     var responseData: Data?
     var statusCode:Int?
     var error:Error?
     var response:URLResponse?
-    var completionHanlder:onCompletioBlock?
   
-    init(withURLString urlString: String, andNetworkingProvider provider: KMNetworkingProvider = KMNetworkConnector()){
+  
+    init(withURLString urlString: String, data:Any? = nil, andNetworkingProvider provider: KMNetworkingProvider = KMNetworkConnector()){
+        self.postData = data
         self.urlString = urlString
         self.provider = provider
     }
+    
     
     override func main() {
         guard isCancelled == false
@@ -32,10 +36,11 @@ class KMGetServerDataOperation: KMCustomOperation {
         }
         executing(true)
        
-        provider.restAPICall(urlString: urlString) { (data,error,statusCode) in
+        provider.restAPICall(urlString: urlString, data: self.postData) { (data,error,statusCode) in
             self.responseData = data
             self.error = error
             self.statusCode = statusCode
+            
             self.executing(false)
             self.finish(true)
         }

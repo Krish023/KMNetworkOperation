@@ -11,6 +11,9 @@ import UIKit
 class KMOperationQueueManager:OperationQueue
 {
     
+    let completionOperation = BlockOperation {
+        // do something
+    }
     func addDependencyOperation( to operation1:KMCustomOperation, from  operation:KMCustomOperation)
     {
        operation.addDependency(operation1)
@@ -21,12 +24,18 @@ class KMOperationQueueManager:OperationQueue
     {
         if isAdddependency
         {
-            
+            for object in operations {
+                let operation = object
+                    completionOperation.addDependency(operation)
+                self.addOperation(operation)
+            }
+            self.addOperation(completionOperation)
         }
         else
         {
-        self.addOperations(operations, waitUntilFinished: false)
+            self.addOperations(operations, waitUntilFinished: false)
         }
+  
     }
     func cancelOperation(operation:KMGetServerDataOperation)
      

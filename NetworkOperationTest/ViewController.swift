@@ -16,6 +16,8 @@ class ViewController: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        
+        
         let op =  KMGetServerDataOperation.init(withURLString: "https://www.google.com/")
         op.name = "1"
         let op1 =  KMGetServerDataOperation.init(withURLString: "https://www.google.com/")
@@ -23,7 +25,7 @@ class ViewController: UIViewController {
         let op2 =  KMGetServerDataOperation.init(withURLString: "https://www.google.com/")
          op.name = "3"
         let queue =   KMOperationQueueManager()
-        queue.addOperation(operations: [op,op1,op2])
+        queue.addOperation(operations: [op,op1,op2],isAdddependency:true)
        // queue.maxConcurrentOperationCount = 2
         op.completionBlock = {
             KMLogger.log(message: op.responseData ?? "")

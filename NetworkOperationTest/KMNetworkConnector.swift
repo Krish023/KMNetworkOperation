@@ -11,7 +11,7 @@ import UIKit
 class KMNetworkConnector: KMNetworkingProvider
 {
     
-    func restAPICall(urlString: String?, onCompleted: @escaping ((Data?, Error?, Int?) -> ())) {
+    func restAPICall(urlString: String?,data:Any? = nil, onCompleted: @escaping ((Data?, Error?, Int?) -> ())) {
         
         guard  urlString != nil  else {
             onCompleted(nil,nil,nil)
@@ -22,6 +22,10 @@ class KMNetworkConnector: KMNetworkingProvider
         
        // let sessionConfig = URLSessionConfiguration.default
         let request = URLRequest(url:(urlString?.asURL())!)
+        if data != nil
+        {
+            //request.httpBody = 
+        }
         let task = session.dataTask(with: request) { (data, response, error) in
             if error == nil {
                 // Success

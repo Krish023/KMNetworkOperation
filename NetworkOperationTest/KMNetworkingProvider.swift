@@ -9,6 +9,6 @@
 import UIKit
 
 protocol KMNetworkingProvider {
-     func restAPICall(urlString: String?, onCompleted:@escaping  ((Data?,Error?,Int?) -> ()))
+    func restAPICall(urlString: String?,data:Any?, onCompleted:@escaping  ((Data?,Error?,Int?) -> ()))
 
 }
